@@ -176,19 +176,22 @@
         crossorigin="anonymous"></script>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbweCrBfkrRdN84Wsnuakio41RASQJ5aWOJ5A7Oypi1m5Aqy9Hx69VrC6Q2yB-f0t7MC/exec'
-        const form = document.forms['submit-to-google-sheet']
-        const msg = document.getElementById("msg")
-        form.addEventListener('submit', e => {
+        $("#submit-form").submit((e) => {
             e.preventDefault()
-            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-                .then(response => {msg.innerHTML = "Message sent Successfully"
-            setTimeout(function(){
-                msg.innerHTML = ""
-            },5000)
-            form.reset()
-        })
-                .catch(error => console.error('Error!', error.message))
+
+                 $.ajax({
+                            url: "https://script.google.com/macros/s/AKfycbzo74ilzigUcp2qgih5f0xZLqKhM6qwyJDTuD58v3rIVdV4hmB8-3z4DNzYB1aQROksUA/exec",
+                            data: $("#submit-form").serialize(),
+                            method: "post",
+                            success: function (response) {
+                                alert("Form submitted successfully")
+                                window.location.reload()
+                                window.location.href="https://avi-nas.github.io/dmh/"
+                            },
+                            error: function (err) {
+                                alert("Something Error")
+                            }
+                        });
         })
     </script>
 </body>
